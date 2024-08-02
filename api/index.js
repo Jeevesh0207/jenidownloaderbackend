@@ -15,7 +15,7 @@ const io = socketIo(server,{
     }
 })
 
-const routes = require('./routes/routes')
+const routes = require('../routes/routes')
 
 const corsOption = {
     origin: '*',
