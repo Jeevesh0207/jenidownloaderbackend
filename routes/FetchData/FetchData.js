@@ -2,13 +2,14 @@ const express = require('express');
 const { LinkVerification } = require('../../middleware');
 const ytdl = require('@distube/ytdl-core');
 // const ytdl = require('ytdl-core');
+const {agent} = require('../../cookies/cookies')
 
 const FetchData = express.Router();
 
 FetchData.post('/', LinkVerification, async (req, res) => {
     try {
         const { link } = req.body;
-        const response = await ytdl.getInfo(link);
+        const response = await ytdl.getInfo(link,{agent});
 
         const videoInfo = {
             title: response.videoDetails.title,

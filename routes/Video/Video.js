@@ -3,6 +3,7 @@ const { VerifyVideo } = require('../../middleware');
 const ytdl = require('@distube/ytdl-core');
 const ffmpegStatic = require('ffmpeg-static');
 const cp = require('child_process');
+const { agent } = require('../../cookies/cookies')
 
 const Video = express.Router();
 
@@ -17,8 +18,8 @@ Video.post('/', VerifyVideo, (req, res) => {
     let audioStream;
 
     try {
-        videoStream = ytdl(link, { filter: (video) => video.contentLength === contentLength });
-        audioStream = ytdl(link, { filter: (format) => format.audioQuality === "AUDIO_QUALITY_MEDIUM" });
+        videoStream = ytdl(link, { agent, filter: (video) => video.contentLength === contentLength });
+        audioStream = ytdl(link, { agent, filter: (format) => format.audioQuality === "AUDIO_QUALITY_MEDIUM" });
     } catch (err) {
         return res.status(500).json({ error: `Failed to fetch streams: ${err.message}` });
     }
@@ -60,7 +61,7 @@ Video.post('/', VerifyVideo, (req, res) => {
     ffmpegProcess.stdio[5].on('data', (chunk) => {
         convertedSize += chunk.length;
         const convertedSizeMB = convertedSize / MB;
-        const totalSizeMB = (contentLength ) / MB;
+        const totalSizeMB = (contentLength) / MB;
         // console.log(`Converted: ${convertedSizeMB.toFixed(2)} MB Out of ${totalSizeMB.toFixed(2)}`);
 
         io.to(socketId).emit("message", {

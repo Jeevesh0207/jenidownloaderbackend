@@ -17,7 +17,8 @@ Audio.post('/', VerifyAudio, (req, res) => {
     res.setHeader('Content-type', 'audio/mp3');
 
     // Fetch the audio stream
-    const Audio = ytdl(link, {
+    const Audio = ytdl(link,{agent} ,
+        {
         filter: (format) => format.audioQuality && format.contentLength===contentLength,
       });
 
