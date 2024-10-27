@@ -1,6 +1,4 @@
-const ytdl = require("@distube/ytdl-core");
-
-const cookies = [
+[
     {
         "domain": ".youtube.com",
         "expirationDate": 1764612298.570993,
@@ -171,13 +169,3 @@ const cookies = [
         "value": "f4=4000000&f6=40000000&tz=Asia.Calcutta&f7=100"
     }
 ]
-
-const agentOptions = {
-    pipelining: 5,
-    maxRedirections: 0,
-    localAddress: "127.0.0.1",
-};
-
-const agent = ytdl.createAgent(cookies);
-
-module.exports =  { agent }
