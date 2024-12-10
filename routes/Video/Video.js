@@ -72,7 +72,7 @@ Video.post('/', VerifyVideo, (req, res) => {
         convertedSize += chunk.length;
         const convertedSizeMB = convertedSize / MB;
         const totalSizeMB = (contentLength) / MB;
-        console.log(`Converted: ${convertedSizeMB.toFixed(2)} MB Out of ${totalSizeMB.toFixed(2)}`);
+        // console.log(`Converted: ${convertedSizeMB.toFixed(2)} MB Out of ${totalSizeMB.toFixed(2)}`);
 
         io.to(socketId).emit("message", {
             type: "progress",
