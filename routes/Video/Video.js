@@ -61,6 +61,9 @@ Video.post('/', VerifyVideo, (req, res) => {
     videoStream.pipe(ffmpegProcess.stdio[4]);
     audioStream.pipe(ffmpegProcess.stdio[3]);
 
+    console.log(videoStream)
+    console.log(audioStream)
+
     const MB = 1024 * 1024;
 
     const io = req.app.get('io');
@@ -69,7 +72,7 @@ Video.post('/', VerifyVideo, (req, res) => {
         convertedSize += chunk.length;
         const convertedSizeMB = convertedSize / MB;
         const totalSizeMB = (contentLength) / MB;
-        // console.log(`Converted: ${convertedSizeMB.toFixed(2)} MB Out of ${totalSizeMB.toFixed(2)}`);
+        console.log(`Converted: ${convertedSizeMB.toFixed(2)} MB Out of ${totalSizeMB.toFixed(2)}`);
 
         io.to(socketId).emit("message", {
             type: "progress",
