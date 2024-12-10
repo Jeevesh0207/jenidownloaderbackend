@@ -10,6 +10,13 @@ const Video = express.Router();
 Video.post('/', VerifyVideo, (req, res) => {
     const { contentLength, link, duration, socketId } = req.body;
 
+    console.log({
+        contentLength: contentLength, 
+        link:link, 
+        duration:duration, 
+        socketId:socketId
+    })
+
     // Set response headers for MKV format
     res.setHeader('Content-Disposition', 'attachment; filename=merged.mkv');
     res.setHeader('Content-Type', 'video/x-matroska');
