@@ -72,7 +72,7 @@ Video.post('/', VerifyVideo, (req, res) => {
         convertedSize += chunk.length;
         const convertedSizeMB = convertedSize / MB;
         const totalSizeMB = (contentLength) / MB;
-        // console.log(`Converted: ${convertedSizeMB.toFixed(2)} MB Out of ${totalSizeMB.toFixed(2)}`);
+        console.log(`Converted: ${convertedSizeMB.toFixed(2)} MB Out of ${totalSizeMB.toFixed(2)}`);
 
         io.to(socketId).emit("message", {
             type: "progress",
@@ -82,25 +82,25 @@ Video.post('/', VerifyVideo, (req, res) => {
 
     });
 
-    ffmpegProcess.on('error', (err) => {
-        console.error(`FFmpeg error: ${err}`);
-        res.status(500).json({ error: `FFmpeg error: ${err.message}` });
+    // ffmpegProcess.on('error', (err) => {
+    //     console.error(`FFmpeg error: ${err}`);
+    //     res.status(500).json({ error: `FFmpeg error: ${err.message}` });
 
-        io.to(socketId).emit("end", {
-            type: "finished"
-        })
+    //     io.to(socketId).emit("end", {
+    //         type: "finished"
+    //     })
 
-    });
+    // });
 
-    ffmpegProcess.on('close', (code) => {
-        console.log(`FFmpeg process exited with code ${code}`);
-        res.end();
+    // ffmpegProcess.on('close', (code) => {
+    //     console.log(`FFmpeg process exited with code ${code}`);
+    //     res.end();
 
-        io.to(socketId).emit("end", {
-            type: "finished"
-        })
+    //     io.to(socketId).emit("end", {
+    //         type: "finished"
+    //     })
 
-    });
+    // });
 
     ffmpegProcess.stdio[5].pipe(res);
 });
